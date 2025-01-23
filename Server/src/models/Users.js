@@ -6,8 +6,14 @@ const User = sequelize.define('User', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    password: {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    email: {
         type: DataTypes.STRING,
+        unique: true,
         allowNull: false
     },
     superUser: {
@@ -18,8 +24,7 @@ const User = sequelize.define('User', {
         type: DataTypes.BOOLEAN,
         allowNull: false
     },
-    id: {
-        type: DataTypes.UUID,
-    },
     
 })
+
+module.exports = User
