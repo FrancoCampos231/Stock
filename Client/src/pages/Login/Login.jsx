@@ -1,5 +1,7 @@
 
-import { formHook } from "../hooks/FormHook"
+import { NavLink } from "react-router-dom"
+import { formHook } from "../../hooks/FormHook"
+import './Login.css'
 
 
 export const Login = () => {
@@ -9,7 +11,7 @@ export const Login = () => {
         password: ''
     }
 
-    const {changeForm, email , password, handlerChange } = formHook(initialForm)
+    const { changeForm, email, password, handlerChange } = formHook(initialForm)
 
     const onSubmit = (event) => {
         event.preventDefault()
@@ -38,7 +40,11 @@ export const Login = () => {
                     onChange={handlerChange}
                 />
             </div>
-            <button>Create User</button>
+            <button>
+                <NavLink to='/createUser'>
+                    Create User
+                </NavLink>
+            </button>
             <button>Submit</button>
         </form>
     )

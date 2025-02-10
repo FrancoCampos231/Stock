@@ -8,13 +8,6 @@ export const formHook = (InitialForm) => {
   
     const handlerChange = ({target}) => {
         const {name, value} = target
-        // if(name == password) {
-        //     const encripte = EncriptarContraseña(value)
-        //     setChangeForm({
-        //         ...changeForm,
-        //         [name] : encripte
-        //     })
-        // }
         setChangeForm({
             ...changeForm,
             [name] : value
