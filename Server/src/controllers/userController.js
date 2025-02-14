@@ -1,4 +1,5 @@
 const { Users } = require('../models');
+const bcrypt = require('bcrypt')
 
 // Obtener todos los usuarios
 const getAllUsers = async (req, res) => {
@@ -23,9 +24,37 @@ const getUserById = async (req, res) => {
 
 // Crear un usuario
 const createUser = async (req, res) => {
+
+  const { name, email, password, superUser, masterUser } = req.body
+
   try {
-    const newUser = await Users.create(req.body);
-    res.status(201).json(newUser);
+    if (!superUser&& !masterUser) {
+      superUser = false
+      masterUser = false
+    }
+
+    const exisUser = await Users.findOne({ where: { email } });
+    if (exisUser) {
+      return res.status(400).json({ message: 'El usuario ya existe' })
+    }
+
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds)
+
+    const newUser = await Users.create({
+      name,
+      email,
+      password: hashedPassword,
+      superUser,
+      masterUser
+    });
+    res.status(201).json({
+      id: newUser.id,
+      name: newUser.name,
+      email: newUser.email,
+      superUser: newUser.superUser,
+      masterUser: newUser.masterUser
+    });
   } catch (error) {
     res.status(500).json({ error: 'Error al crear el usuario' });
   }

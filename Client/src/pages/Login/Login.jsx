@@ -1,6 +1,6 @@
 
 import { NavLink } from "react-router-dom"
-import { formHook } from "../../hooks/FormHook"
+import { useFormHook } from "../../hooks/useFormHook"
 import './Login.css'
 
 
@@ -11,7 +11,7 @@ export const Login = () => {
         password: ''
     }
 
-    const { changeForm, email, password, handlerChange } = formHook(initialForm)
+    const { changeForm, email, password, handlerChange } = useFormHook(initialForm)
 
     const onSubmit = (event) => {
         event.preventDefault()

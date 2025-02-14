@@ -1,9 +1,11 @@
 import { useState } from "react"
 
 
-export const formHook = (InitialForm) => {
+
+export const useFormHook = (initialForm) => {
     
-    const [changeForm, setChangeForm] = useState(InitialForm)
+
+    const [changeForm, setChangeForm] = useState(initialForm)
 
   
     const handlerChange = ({target}) => {

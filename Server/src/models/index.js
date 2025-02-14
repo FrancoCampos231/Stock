@@ -1,14 +1,13 @@
 // Importamos la conexión configurada
 const sequelize = require('../config/db'); 
-const { Sequelize } = require('sequelize');
-const UsersModel = require('./Users');
-const ProductModel = require('./Product');
-const ProviderModel = require('./Provider');
+const Users = require('./Users');
+const Product = require('./Products');
+const Provider = require('./Provider');
 
 // Inicializar los modelos con la conexión existente
-const Users = UsersModel(sequelize, Sequelize);
-const Product = ProductModel(sequelize, Sequelize);
-const Provider = ProviderModel(sequelize, Sequelize);
+// const Users = UsersModel(sequelize, Sequelize);
+// const Product = ProductModel(sequelize, Sequelize);
+// const Provider = ProviderModel(sequelize, Sequelize);
 
 // Definir las relaciones entre los modelos
 Users.hasMany(Product, {
