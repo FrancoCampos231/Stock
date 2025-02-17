@@ -25,13 +25,16 @@ const getUserById = async (req, res) => {
 // Crear un usuario
 const createUser = async (req, res) => {
 
-  const { name, email, password, superUser, masterUser } = req.body
+  const { name, email, password } = req.body
 
+  console.log(name, email, password)
+  
+  const superUser = false
+  const masterUser = false
+
+  console.log(name, email, password, superUser, masterUser)
   try {
-    if (!superUser&& !masterUser) {
-      superUser = false
-      masterUser = false
-    }
+
 
     const exisUser = await Users.findOne({ where: { email } });
     if (exisUser) {
@@ -48,6 +51,7 @@ const createUser = async (req, res) => {
       superUser,
       masterUser
     });
+    console.log(newUser)
     res.status(201).json({
       id: newUser.id,
       name: newUser.name,

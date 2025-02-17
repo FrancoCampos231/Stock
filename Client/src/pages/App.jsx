@@ -9,7 +9,7 @@ export const App = () => {
             <Navbar>Navigator</Navbar>
             <Routes>
                 <Route path="/" element={<Login></Login>}>Login</Route>
-                <Route path="/createUser" element={<CreateUser></CreateUser>}>Login</Route>
+                <Route path="/createUser" element={<CreateUser></CreateUser>}>Create User</Route>
             </Routes>
         </>
     )

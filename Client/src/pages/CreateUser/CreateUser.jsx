@@ -1,12 +1,17 @@
 import { NavLink } from "react-router-dom"
 import { useFormHook } from "../../hooks/useFormHook"
+import { postUser } from "../../actions/actions";
+import { useDispatch} from "react-redux";
 
 export const CreateUser = () => {
+
+    const dispatch = useDispatch()
+
 
     const initialForm = {
         name: '',
         email: '',
-        password: ''
+        password: '',
     }
 
     const { changeForm, name, email, password, handlerChange } = useFormHook(initialForm)
@@ -14,6 +19,7 @@ export const CreateUser = () => {
     const onSubmit = (event) => {
         event.preventDefault()
         console.log(changeForm)
+        dispatch(postUser(changeForm))
     }
 
 
