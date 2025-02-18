@@ -16,3 +16,17 @@ export const postUser = (changeForm) => async (dispatch) => {
     }
 }
 
+export const  loginUser = (changeForm) => async (dispatch) => {
+    try {
+        console.log('entre al get user', changeForm)
+        const response = await axios.post('http://localhost:5000/data/Users/login', changeForm)
+        console.log('respuesta del back de login', response.data)
+
+        dispatch({
+            type: "USER_LOGIN",
+            payload: response.data
+        })
+    } catch (error) {
+        console.log('error al entrar con el usuario', error)
+    }
+}

@@ -18,7 +18,6 @@ export const CreateUser = () => {
 
     const onSubmit = (event) => {
         event.preventDefault()
-        console.log(changeForm)
         dispatch(postUser(changeForm))
     }
 
@@ -54,7 +53,7 @@ export const CreateUser = () => {
                         Login
                     </NavLink>
                 </button>
-                <button>Submit</button>
+                <button type="submit">Submit</button>
             </form>
         </>
     )

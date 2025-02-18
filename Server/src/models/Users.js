@@ -45,6 +45,10 @@ Users.init (
             unique: true,
             allowNull: false
         },
+        password: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
         superUser: {
             type: DataTypes.BOOLEAN,
             allowNull: false,

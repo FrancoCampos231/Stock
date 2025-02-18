@@ -2,9 +2,13 @@
 import { NavLink } from "react-router-dom"
 import { useFormHook } from "../../hooks/useFormHook"
 import './Login.css'
+import { useDispatch } from "react-redux"
+import { loginUser } from "../../actions/actions"
 
 
 export const Login = () => {
+
+    const dispatch = useDispatch()
 
     const initialForm = {
         email: '',
@@ -15,7 +19,8 @@ export const Login = () => {
 
     const onSubmit = (event) => {
         event.preventDefault()
-        console.log(changeForm)
+        dispatch(loginUser(changeForm))
+        
     }
 
     return (
@@ -45,7 +50,7 @@ export const Login = () => {
                     Create User
                 </NavLink>
             </button>
-            <button>Submit</button>
+            <button type="submit">Submit</button>
         </form>
     )
 }

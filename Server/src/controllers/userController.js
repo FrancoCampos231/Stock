@@ -4,7 +4,9 @@ const bcrypt = require('bcrypt')
 // Obtener todos los usuarios
 const getAllUsers = async (req, res) => {
   try {
-    const users = await Users.findAll();
+    const users = await Users.findAll({
+      attributes: ['id', 'name', 'email', 'superUser', 'masterUser']
+    });
     res.json(users);
   } catch (error) {
     res.status(500).json({ error: 'Error al obtener los usuarios' });
@@ -27,12 +29,12 @@ const createUser = async (req, res) => {
 
   const { name, email, password } = req.body
 
-  console.log(name, email, password)
-  
+
+
   const superUser = false
   const masterUser = false
 
-  console.log(name, email, password, superUser, masterUser)
+
   try {
 
 
@@ -56,6 +58,7 @@ const createUser = async (req, res) => {
       id: newUser.id,
       name: newUser.name,
       email: newUser.email,
+      password: newUser.password,
       superUser: newUser.superUser,
       masterUser: newUser.masterUser
     });
@@ -88,10 +91,40 @@ const deleteUser = async (req, res) => {
   }
 };
 
+//Logear como Usuario
+const loginUser = async (req, res) => {
+  
+  const { email, password} = req.body
+  
+  try {
+    const user = await Users.findOne({ where: {email}});
+    if(!user) {
+      return res.status(402).json({ message: 'El usuario no existe'})
+    }
+
+    const isPassword = await bcrypt.compare(password, user.password);
+    if(!isPassword) {
+      return res.status(403).json({message: 'Contraseña Invalida'})
+    }
+
+    res.json({
+      id : user.id,
+      name: user.name,
+      email: user.email,
+      message: 'Inicio de sesion exitosa!'
+    })
+
+  } catch (error) {
+    console.log('Error', error)
+    res.status(501).json({message: 'Error al iniciar sesion'})
+  }
+}
+
 module.exports = {
   getAllUsers,
   getUserById,
   createUser,
   updateUser,
   deleteUser,
+  loginUser
 };
