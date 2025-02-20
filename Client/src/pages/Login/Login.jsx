@@ -1,14 +1,18 @@
 
-import { NavLink } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
 import { useFormHook } from "../../hooks/useFormHook"
 import './Login.css'
 import { useDispatch } from "react-redux"
 import { loginUser } from "../../actions/actions"
+import { useAuth } from "../../hooks/useVerificationHook"
+import { useEffect } from "react"
 
 
 export const Login = () => {
 
     const dispatch = useDispatch()
+    const {login} = useAuth()
+    const navigate = useNavigate()
 
     const initialForm = {
         email: '',
@@ -19,9 +23,17 @@ export const Login = () => {
 
     const onSubmit = (event) => {
         event.preventDefault()
-        dispatch(loginUser(changeForm))
+        dispatch(loginUser(changeForm, login, navigate))
         
     }
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (token) {
+            console.log("Token encontrado, redirigiendo al home...");
+            navigate("/home", {replace: true});
+        }
+    }, []);
 
     return (
         <form onSubmit={onSubmit}>
@@ -45,11 +57,9 @@ export const Login = () => {
                     onChange={handlerChange}
                 />
             </div>
-            <button>
-                <NavLink to='/createUser'>
-                    Create User
-                </NavLink>
-            </button>
+            <NavLink to="/createUser">
+                <button type="button">Create User</button>
+            </NavLink>
             <button type="submit">Submit</button>
         </form>
     )

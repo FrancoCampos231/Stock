@@ -1,5 +1,6 @@
 const { Users } = require('../models');
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 // Obtener todos los usuarios
 const getAllUsers = async (req, res) => {
@@ -107,11 +108,14 @@ const loginUser = async (req, res) => {
       return res.status(403).json({message: 'Contraseña Invalida'})
     }
 
+    const token = jwt.sign({ id: user.id, email: user.email }, "secretKey", { expiresIn: "1h" });
+
     res.json({
       id : user.id,
       name: user.name,
       email: user.email,
-      message: 'Inicio de sesion exitosa!'
+      message: 'Inicio de sesion exitosa!',
+      token
     })
 
   } catch (error) {
