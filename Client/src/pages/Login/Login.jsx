@@ -5,7 +5,7 @@ import './Login.css'
 import { useDispatch } from "react-redux"
 import { loginUser } from "../../actions/actions"
 import { useAuth } from "../../hooks/useVerificationHook"
-import { useEffect } from "react"
+// import { useEffect } from "react"
 
 
 export const Login = () => {
@@ -23,17 +23,23 @@ export const Login = () => {
 
     const onSubmit = (event) => {
         event.preventDefault()
+
+        if (!changeForm.email || !changeForm.password) {
+            alert("contraseña y email vacios")
+            return;
+        }
+
         dispatch(loginUser(changeForm, login, navigate))
         
     }
 
-    useEffect(() => {
-        const token = localStorage.getItem("token");
-        if (token) {
-            console.log("Token encontrado, redirigiendo al home...");
-            navigate("/home", {replace: true});
-        }
-    }, []);
+    // useEffect(() => {
+    //     const token = localStorage.getItem("token");
+    //     if (token) {
+    //         console.log("Token encontrado, redirigiendo al home...");
+    //         navigate("/home", {replace: true});
+    //     }
+    // }, [navigate]);
 
     return (
         <form onSubmit={onSubmit}>
@@ -48,7 +54,7 @@ export const Login = () => {
                 />
             </div>
             <div>
-                <label htmlFor='pasword'>Password: </label>
+                <label htmlFor='password'>Password: </label>
                 <input
                     type="password"
                     name="password"

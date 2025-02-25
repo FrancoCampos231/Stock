@@ -32,7 +32,7 @@ export const loginUser = (changeForm, login, navigate) => async (dispatch) => {
         if (response.data.token) {
             console.log("token recivido", response.data.token)
 
-            localStorage.setItem("token", response.data.token)
+            // localStorage.setItem("token", response.data.token)
             login(response.data.token)
 
             console.log("ahora redirije al home")

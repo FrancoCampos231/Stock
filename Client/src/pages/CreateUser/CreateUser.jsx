@@ -18,6 +18,11 @@ export const CreateUser = () => {
 
     const onSubmit = (event) => {
         event.preventDefault()
+
+        if (!changeForm.name || !changeForm.password || !changeForm.email) {
+            alert("Los campos deben estar llenos")
+            return
+        }
         dispatch(postUser(changeForm))
     }
 
@@ -49,7 +54,7 @@ export const CreateUser = () => {
                     value={password}
                     onChange={handlerChange} />
                 <button>
-                    <NavLink to='/'>
+                    <NavLink to='/login'>
                         Login
                     </NavLink>
                 </button>
