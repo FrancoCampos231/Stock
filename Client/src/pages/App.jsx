@@ -3,7 +3,7 @@ import { Login} from "../pages/Login/Login"
 import { CreateUser } from "./CreateUser/CreateUser"
 import { Home } from "./Home/Home"
 import PrivateRoute from "../components/PrivateRoute"
-import { AuthProvider } from "../hooks/useVerificationHook"
+import { AuthProvider } from "../context/useVerificationHook"
 
 export const App = () => {
     return (

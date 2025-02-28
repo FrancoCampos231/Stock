@@ -3,6 +3,7 @@ import axios from 'axios'
 
 
 
+
 export const postUser = (changeForm) => async (dispatch) => {
     try {
         console.log('entra al post user', changeForm)
@@ -31,9 +32,12 @@ export const loginUser = (changeForm, login, navigate) => async (dispatch) => {
 
         if (response.data.token) {
             console.log("token recivido", response.data.token)
+            const {token, masterUser, superUser} = response.data
+
+            console.log(token, masterUser, superUser)
 
             // localStorage.setItem("token", response.data.token)
-            login(response.data.token)
+            login(token, masterUser, superUser)
 
             console.log("ahora redirije al home")
             navigate("/home", { replace: true }); // 🔹 Usa replace: true para evitar bucles

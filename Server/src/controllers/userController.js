@@ -115,7 +115,9 @@ const loginUser = async (req, res) => {
       name: user.name,
       email: user.email,
       message: 'Inicio de sesion exitosa!',
-      token
+      token,
+      masterUser: user.masterUser,
+      superUser: user.superUser
     })
 
   } catch (error) {

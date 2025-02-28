@@ -1,50 +1,49 @@
-
-import { NavLink, useNavigate } from "react-router-dom"
-import { useFormHook } from "../../hooks/useFormHook"
-import './Login.css'
-import { useDispatch } from "react-redux"
-import { loginUser } from "../../actions/actions"
-import { useAuth } from "../../hooks/useVerificationHook"
-// import { useEffect } from "react"
-
+import { useState, useEffect } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useFormHook } from "../../hooks/useFormHook";
+import { useDispatch} from "react-redux";
+import { loginUser } from "../../actions/actions";
+import { useAuth } from "../../context/useVerificationHook";
+import "./Login.css";
 
 export const Login = () => {
-
-    const dispatch = useDispatch()
-    const {login} = useAuth()
-    const navigate = useNavigate()
+    const dispatch = useDispatch();
+    const { login, isAuthenticated } = useAuth();
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState(false); // Estado para evitar doble envío
 
     const initialForm = {
-        email: '',
-        password: ''
-    }
+        email: "",
+        password: ""
+    };
 
-    const { changeForm, email, password, handlerChange } = useFormHook(initialForm)
+    const { changeForm, email, password, handlerChange } = useFormHook(initialForm);
 
-    const onSubmit = (event) => {
-        event.preventDefault()
+    const onSubmit = async (event) => {
+        event.preventDefault();
 
-        if (!changeForm.email || !changeForm.password) {
-            alert("contraseña y email vacios")
+        if (!email || !password) {
+            alert("Contraseña y email vacíos");
             return;
         }
 
-        dispatch(loginUser(changeForm, login, navigate))
-        
-    }
+        setLoading(true); // Bloquea el botón mientras se envía la solicitud
+        await dispatch(loginUser(changeForm, login, navigate));
+        setLoading(false);
+    };
 
-    // useEffect(() => {
-    //     const token = localStorage.getItem("token");
-    //     if (token) {
-    //         console.log("Token encontrado, redirigiendo al home...");
-    //         navigate("/home", {replace: true});
-    //     }
-    // }, [navigate]);
+    // 🔹 Redirige al usuario automáticamente si ya está autenticado
+    useEffect(() => {
+        if (isAuthenticated) {
+            console.log("✅ Usuario autenticado, redirigiendo...");
+            navigate("/home", { replace: true });
+        }
+    }, [isAuthenticated, navigate]);
 
     return (
         <form onSubmit={onSubmit}>
             <div>
-                <label htmlFor='email'>Email: </label>
+                <label htmlFor="email">Email: </label>
                 <input
                     type="email"
                     name="email"
@@ -54,11 +53,11 @@ export const Login = () => {
                 />
             </div>
             <div>
-                <label htmlFor='password'>Password: </label>
+                <label htmlFor="password">Password: </label>
                 <input
                     type="password"
                     name="password"
-                    placeholder="Enter you password"
+                    placeholder="Enter your password"
                     value={password}
                     onChange={handlerChange}
                 />
@@ -66,7 +65,9 @@ export const Login = () => {
             <NavLink to="/createUser">
                 <button type="button">Create User</button>
             </NavLink>
-            <button type="submit">Submit</button>
+            <button type="submit" disabled={loading}>
+                {loading ? "Logging in..." : "Submit"}
+            </button>
         </form>
-    )
-}
+    );
+};

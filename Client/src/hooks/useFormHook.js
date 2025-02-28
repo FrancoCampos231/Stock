@@ -1,23 +1,19 @@
-import { useState } from "react"
-
-
+import { useState } from "react";
 
 export const useFormHook = (initialForm) => {
-    
-    const [changeForm, setChangeForm] = useState(initialForm)
+    const [changeForm, setChangeForm] = useState(initialForm);
 
-    const handlerChange = ({target}) => {
-        const {name, value} = target
+    const handlerChange = ({ target }) => {
+        const { name, value } = target;
         setChangeForm((prevForm) => ({
             ...prevForm,
-            [name] : value
-        }))
-    }
-    
-
+            [name]: value,
+        }));
+    };
 
     return {
+        ...changeForm,
         changeForm,
-        handlerChange
-    }
-}
+        handlerChange,
+    };
+};

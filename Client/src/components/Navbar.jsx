@@ -1,5 +1,5 @@
 import { useNavigate} from "react-router-dom"
-import { useAuth } from "../hooks/useVerificationHook";
+import { useAuth } from "../context/useVerificationHook";
 
 export const Navbar = () => {
 

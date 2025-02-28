@@ -53,11 +53,9 @@ export const CreateUser = () => {
                     placeholder="Enter password..."
                     value={password}
                     onChange={handlerChange} />
-                <button>
                     <NavLink to='/login'>
-                        Login
+                        <button>Login</button>
                     </NavLink>
-                </button>
                 <button type="submit">Submit</button>
             </form>
         </>
